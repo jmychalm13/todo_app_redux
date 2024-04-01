@@ -26,7 +26,7 @@ export function Todos() {
 
   return (
     <div>
-      <h1>All Todos</h1>
+      <h1 className="text-3xl">All Todos</h1>
       <div>
         <label>Add Todo:</label>
         <input value={todoText} onChange={(event) => setTodoText(event.target.value)} type="text" />

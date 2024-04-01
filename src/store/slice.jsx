@@ -18,11 +18,17 @@ export const todoSlice = createSlice({
       state.todos.push(newTodo);
     },
     // this is where I can  add other functions
-    someOtherFunction: (state, action) => {
-      console.log(state, action);
+    toggleStatus: (state, action) => {
+      const id = action.payload;
+      const existingTodo = state.todos.find((todo) => todo.id === id);
+      if (existingTodo.status === "incomplete") {
+        existingTodo.status = "complete";
+      } else {
+        existingTodo.status = "incomplete";
+      }
     },
   },
 });
 
-export const { addToTodos, someOtherFunction } = todoSlice.actions;
+export const { addToTodos, toggleStatus } = todoSlice.actions;
 export default todoSlice.reducer;
