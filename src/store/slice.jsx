@@ -2,9 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   todos: [
-    { id: 1, text: "Create a react app", status: "incomplete" },
-    { id: 2, text: "Create a redux app", status: "incomplete" },
-    { id: 3, text: "Create a redux toolkit app", status: "incomplete" },
+    { id: 1, text: "Create a react app", completed: false },
+    { id: 2, text: "Create a redux app", completed: false },
+    { id: 3, text: "Create a redux toolkit app", completed: false },
   ],
   appTitle: "Todo's",
 };
@@ -16,19 +16,29 @@ export const todoSlice = createSlice({
     addToTodos: (state, action) => {
       const newTodo = action.payload;
       state.todos.push(newTodo);
+      console.log("action:", action);
     },
     // this is where I can  add other functions
     toggleStatus: (state, action) => {
-      const id = action.payload;
-      const existingTodo = state.todos.find((todo) => todo.id === id);
-      if (existingTodo.status === "incomplete") {
-        existingTodo.status = "complete";
-      } else {
-        existingTodo.status = "incomplete";
-      }
+      state.todos = state.todos.map((todo) => {
+        if (todo.id === action.payload.id) {
+          todo.completed = !todo.completed;
+        }
+        return todo;
+      });
     },
+    removeTodo: (state, action) => {
+      state.todos = state.todos.filter((todo) => todo.id !== action.payload.id);
+      console.log(state.todos);
+    },
+    // updateTodo: (state, action) => {
+    //   state.todos.forEach((todo) => {
+    //     if (todo.id === action.payload.id) {
+    //     }
+    //   });
+    // },
   },
 });
 
-export const { addToTodos, toggleStatus } = todoSlice.actions;
+export const { addToTodos, toggleStatus, removeTodo } = todoSlice.actions;
 export default todoSlice.reducer;
